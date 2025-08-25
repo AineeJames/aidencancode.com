@@ -17,9 +17,9 @@ if (!post) {
   return Astro.redirect("/404");
 }
 
-const { Content } = await render(post);
+const { Content, remarkPluginFrontmatter } = await render(post);
 ---
 
-<BlogPost {post} {slug}>
+<BlogPost {post} {slug} {remarkPluginFrontmatter}>
   <Content slot="content"/>
 </BlogPost>

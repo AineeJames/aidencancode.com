@@ -2,7 +2,6 @@
 title: Building a Simple CLI Tool in Go
 description: A walkthrough on creating a simple command-line tool in Go with examples, explanations, and images.
 pubDate: 2025-08-25
-tags: ["Go", "Programming", "CLI", "Tutorial"]
 ---
 
 # Building a Simple CLI Tool in Go

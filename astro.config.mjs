@@ -1,17 +1,17 @@
 // @ts-check
 import { defineConfig, fontProviders } from 'astro/config';
-
 import tailwindcss from "@tailwindcss/vite";
-
 import db from "@astrojs/db";
-
 import netlify from "@astrojs/netlify";
+import { remarkModifiedTime } from './remark-modified-time.mjs';
+import { remarkReadingTime } from './remark-reading-time.mjs';
 
 // https://astro.build/config
 export default defineConfig({
   output: "server",
 
   markdown: {
+    remarkPlugins: [remarkModifiedTime, remarkReadingTime],
     shikiConfig: {
       theme: "gruvbox-dark-medium"
     }
