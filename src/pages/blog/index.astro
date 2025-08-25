@@ -1,0 +1,22 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content"
+import ViewCount from "../../components/ViewCount.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const posts: CollectionEntry<"blog">[] = await getCollection("blog");
+---
+
+<style>
+@references "tailwindcss";
+
+a {
+  @apply underline hover:opacity-50;
+}
+</style>
+
+<BaseLayout title="Blog">
+  <h1>Blog</h1>
+  {posts.map((post: CollectionEntry<"blog">) => (
+  <a href={`/blog/${post.id}`}>{post.data.title} - <ViewCount postSlug={post.id} /> views</a>
+  ))}
+</BaseLayout>
