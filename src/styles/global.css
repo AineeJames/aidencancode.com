@@ -1,11 +1,20 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
 
-@theme {
+@theme inline {
   --font-sans: var(--font-geist);
   --font-mono: var(--font-geist-mono);
+
+  --color-dim: var(--color-zinc-300);
+
+  --color-black: var(--color-zinc-950);
+  --color-white: var(--color-zinc-50);
 }
 
 body {
   @apply bg-white dark:bg-black text-black dark:text-white;
+}
+
+hr {
+  @apply border-none h-px bg-zinc-700 my-5;
 }

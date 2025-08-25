@@ -1,10 +1,10 @@
 ---
 title: Building a Simple CLI Tool in Go
+author: Aiden Olsen
 description: A walkthrough on creating a simple command-line tool in Go with examples, explanations, and images.
 pubDate: 2025-08-25
 ---
 
-# Building a Simple CLI Tool in Go
 
 Go is a fantastic language for building **command-line tools**. It's fast, simple, and compiles into a single binary that you can share easily.  
 In this post, we'll walk through building a small CLI program step by step. By the end, you’ll have a working application you can expand on.

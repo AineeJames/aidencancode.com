@@ -2,6 +2,9 @@
 import { render } from "astro:content";
 import { getEntry } from "astro:content";
 import BlogPost from "../../layouts/BlogPost.astro";
+import ViewCount from "../../components/ViewCount.astro";
+import dayjs from "dayjs";
+import TableOfContents from "../../components/TableOfContents.astro";
 
 export const prerender = false;
 
@@ -17,9 +20,22 @@ if (!post) {
   return Astro.redirect("/404");
 }
 
-const { Content, remarkPluginFrontmatter } = await render(post);
+const { Content, headings, remarkPluginFrontmatter } = await render(post);
+
+const pubDateFormat = dayjs(post.data.pubDate)
+  .format("DD MMM YYYY")
+const lastModified = dayjs(remarkPluginFrontmatter.lastModified)
+  .format("DD MMM YYYY")
 ---
 
-<BlogPost {post} {slug} {remarkPluginFrontmatter}>
+<BlogPost title={post.data.title}>
+  <div slot="header">
+    <h1 class="text-5xl font-extrabold mb-5">{post.data.title}</h1>
+    <div class="flex justify-between text-sm text-dim mb-5">
+      <p>{post.data.author} / {pubDateFormat}{lastModified !== pubDateFormat ? ` (last update: ${lastModified})` : ""}</p>
+      <p>{remarkPluginFrontmatter.minutesRead} &mdash; <ViewCount server:defer postSlug={slug} increment /> Views</p>
+    </div>
+  </div>
   <Content slot="content"/>
+  <TableOfContents {headings} slot="sidebar" />
 </BlogPost>

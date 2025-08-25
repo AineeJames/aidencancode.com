@@ -1,35 +1,27 @@
 ---
-import type { CollectionEntry } from "astro:content";
 import BaseLayout from "./BaseLayout.astro";
 import Prose from "../components/Prose.astro";
-import ViewCount from "../components/ViewCount.astro";
-import dayjs from "dayjs";
 
 interface Props {
-  post: CollectionEntry<"blog">;
-  slug: string;
-  remarkPluginFrontmatter: Record<string, any>;
+  title: string;
 }
 
-const { post, slug, remarkPluginFrontmatter } = Astro.props;
+const { title } = Astro.props;
 
-const pubDateFormat = dayjs(post.data.pubDate)
-  .format("DD MMM YYYY")
-const lastModified = dayjs(remarkPluginFrontmatter.lastModified)
-  .format("DD MMM YYYY")
 ---
 
-<BaseLayout title={`Blog | ${post.data.title}`}>
-  <article>
-    <h1>{post.data.title}</h1>
-    <p>{remarkPluginFrontmatter.minutesRead}</p>
-    <p>{pubDateFormat}</p>
-    {lastModified !== pubDateFormat ? <p>Last modified: {lastModified}</p> : null}
-    <p><ViewCount server:defer postSlug={slug} increment class="font-bold"/> views</p>
-    <hr />
-    <Prose>
-      <slot name="content"/>
-    </Prose>
+<BaseLayout title={`Blog | ${title}`}>
+  <article class="mt-50">
+    <div class="flex gap-5">
+      <div>
+        <slot name="header" />
+        <hr />
+        <Prose>
+          <slot name="content"/>
+        </Prose>
+      </div>
+      <slot name="sidebar">
+    </div>
   </article>
   <slot />
 </BaseLayout>
