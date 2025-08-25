@@ -4,7 +4,7 @@ const Views = defineTable({
   columns: {
     id: column.number({ primaryKey: true }),
     postSlug: column.text({ unique: true }),
-    count: column.number({ default: 0 }),
+    count: column.number({ default: 1 }),
   }
 })
 
