@@ -5,6 +5,7 @@ import db from "@astrojs/db";
 import netlify from "@astrojs/netlify";
 import { remarkModifiedTime } from './remark-modified-time.mjs';
 import { remarkReadingTime } from './remark-reading-time.mjs';
+import expressiveCode from "astro-expressive-code";
 
 // https://astro.build/config
 export default defineConfig({
@@ -12,16 +13,21 @@ export default defineConfig({
 
   markdown: {
     remarkPlugins: [remarkModifiedTime, remarkReadingTime],
-    shikiConfig: {
-      theme: "gruvbox-dark-medium"
-    }
   },
 
   vite: {
     plugins: [tailwindcss()],
   },
 
-  integrations: [db()],
+  integrations: [
+    db(),
+    expressiveCode({
+      themes: ["gruvbox-dark-medium"],
+      frames: {
+        showCopyToClipboardButton: true,
+      }
+    }),
+  ],
   adapter: netlify(),
 
   experimental: {

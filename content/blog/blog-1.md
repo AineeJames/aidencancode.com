@@ -28,7 +28,7 @@ Before jumping into code, here’s why Go is great for CLI development:
 
 Let's start with a simple `main.go` file.
 
-```go
+```go title="main.go"
 package main
 
 import (
