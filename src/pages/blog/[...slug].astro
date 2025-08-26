@@ -1,32 +1,27 @@
 ---
 import { render } from "astro:content";
-import { getEntry } from "astro:content";
 import BlogPost from "../../layouts/BlogPost.astro";
 import ViewCount from "../../components/ViewCount.astro";
 import dayjs from "dayjs";
 import TableOfContents from "../../components/TableOfContents.astro";
 import Giscus from "../../components/Giscus.astro";
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 
-export const prerender = false;
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post: CollectionEntry<"blog">) => ({
+    params: { slug: post.id },
+    props: { post }
+  }));
+}
 
+const { post } = Astro.props;
 const { slug } = Astro.params;
-
-if (!slug) {
-  return Astro.redirect("/404");
-}
-
-const post = await getEntry("blog", slug);
-
-if (!post) {
-  return Astro.redirect("/404");
-}
-
 const { Content, headings, remarkPluginFrontmatter } = await render(post);
 
 const pubDateFormat = dayjs(post.data.pubDate)
   .format("DD MMM YYYY")
-// const lastModified = dayjs(remarkPluginFrontmatter.lastModified)
-//   .format("DD MMM YYYY")
 ---
 
 <BlogPost title={post.data.title}>
@@ -34,10 +29,19 @@ const pubDateFormat = dayjs(post.data.pubDate)
     <h1 class="text-5xl font-extrabold mb-5 text-accent">{post.data.title}</h1>
     <div class="flex justify-between text-sm text-dim mb-5">
       <p>{post.data.author} / {pubDateFormat}</p>
-      <p>{remarkPluginFrontmatter.minutesRead} &mdash; <ViewCount server:defer postSlug={slug} increment /> Views</p>
+      <p>
+        {remarkPluginFrontmatter.minutesRead} &mdash; 
+        <ViewCount server:defer postSlug={slug} increment>
+          <div slot="fallback" class="inline-block h-[1rem] w-[3ch] animate-pulse rounded-md bg-zinc-800"></div>
+        </ViewCount> 
+        Views
+      </p>
     </div>
   </div>
+
   <Content slot="content"/>
+
   <TableOfContents {headings} slot="sidebar" />
+
   <Giscus slot="footer"/>
 </BlogPost>

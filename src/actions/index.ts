@@ -28,7 +28,9 @@ export const server = {
     input: z.object({
       postSlug: z.string(),
     }),
-    handler: async ({ postSlug }) => {
+    handler: async ({ postSlug }, { request }) => {
+      const isPrerender = request.headers.get("astro-referrer")
+      if (isPrerender) return;
       try {
         return await db
           .insert(Views)

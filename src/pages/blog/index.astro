@@ -17,6 +17,6 @@ a {
 <BaseLayout title="Blog">
   <h1>Blog</h1>
   {posts.map((post: CollectionEntry<"blog">) => (
-  <a href={`/blog/${post.id}`}>{post.data.title} - <ViewCount postSlug={post.id} /> views</a>
+  <a href={`/blog/${post.id}`}>{post.data.title} - <ViewCount server:defer postSlug={post.id} /> views</a>
   ))}
 </BaseLayout>

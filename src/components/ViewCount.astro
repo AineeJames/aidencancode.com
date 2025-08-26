@@ -1,4 +1,6 @@
 ---
+export const prerender = false;
+
 import type { HTMLAttributes } from 'astro/types';
 import { actions } from 'astro:actions';
 
@@ -17,4 +19,4 @@ if (increment) {
   if (error) console.error(error);
 }
 ---
-<span {...restProps}>{data}</span>
+<span {...restProps}>{data?.toLocaleString() || 0}</span>
