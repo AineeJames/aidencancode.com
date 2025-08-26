@@ -13,6 +13,16 @@
   --color-accent: #d4614c;
 }
 
+.no-scrollbar {
+  scrollbar-width: 0;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+
 body {
   @apply bg-white dark:bg-black text-black dark:text-white;
 }
