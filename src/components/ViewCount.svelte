@@ -30,8 +30,6 @@
   });
 </script>
 
-{#if isLoading}
-  <span {...restProps}>&hellip;</span>
-{:else}
-  <span {...restProps}>{viewCount}</span>
-{/if}
+<span {...restProps}>
+  {isLoading ? "…" : viewCount}
+</span>

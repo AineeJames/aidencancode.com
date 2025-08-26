@@ -8,7 +8,7 @@ export const server = {
     input: z.object({
       postSlug: z.string(),
     }),
-    handler: async ({ postSlug }) => {
+    handler: async ({ postSlug }): Promise<number> => {
       try {
         const views = await db
           .select()
@@ -28,19 +28,18 @@ export const server = {
     input: z.object({
       postSlug: z.string(),
     }),
-    handler: async ({ postSlug }, { request }) => {
+    handler: async ({ postSlug }, { request }): Promise<void> => {
       const purpose = request.headers.get("Purpose");
       if (purpose === "prefetch" || purpose === "prerender") return;
 
       try {
-        return await db
+        await db
           .insert(Views)
           .values({ postSlug })
           .onConflictDoUpdate({
             target: Views.postSlug,
             set: { count: sql`count + 1` },
-          })
-          .returning();
+          });
       } catch (e) {
         throw new ActionError({
           code: "BAD_REQUEST",
