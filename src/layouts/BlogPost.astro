@@ -13,7 +13,7 @@ const { title } = Astro.props;
 <BaseLayout title={`Blog | ${title}`}>
   <article class="mt-50">
     <div class="flex gap-5">
-      <div>
+      <div class="min-w-0">
         <slot name="header" />
         <hr />
         <Prose>
