@@ -1,6 +1,6 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
-import ViewCount from "../../components/ViewCount.astro";
+import ViewCount from "../../components/ViewCount.svelte";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import dayjs from "dayjs";
 
@@ -23,9 +23,7 @@ const orderedPosts = posts.sort((a, b) => {
               <p class="text-xs text-dim">{pubDateFormat}</p>
               <p class="text-xs text-dim md:hidden">&middot;</p>
               <p class="text-xs text-dim">
-                <ViewCount server:defer postSlug={post.id}>
-                  <span slot="fallback">&hellip;</span>
-                </ViewCount> views
+                <ViewCount postSlug={post.id} client:load /> views
               </p>
             </div>
             <div class="border-l border-zinc-700 pl-3">

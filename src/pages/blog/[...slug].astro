@@ -1,14 +1,13 @@
 ---
 import { render } from "astro:content";
 import BlogPost from "../../layouts/BlogPost.astro";
-import ViewCount from "../../components/ViewCount.astro";
+import ViewCount from "../../components/ViewCount.svelte";
 import dayjs from "dayjs";
 import TableOfContents from "../../components/TableOfContents.astro";
 import Giscus from "../../components/Giscus.astro";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { Icon } from "astro-icon/components";
-import TextSkeleton from "../../components/TextSkeleton.astro";
 import Avatar from "../../components/Avatar.astro";
 
 export async function getStaticPaths() {
@@ -39,9 +38,7 @@ const pubDateFormat = dayjs(post.data.pubDate)
         <p>{remarkPluginFrontmatter.minutesRead} &mdash;</p>
         <div class="flex items-center gap-1 bg-zinc-800 px-1 rounded-sm">
           <Icon name="lucide:eye"/>
-          <ViewCount postSlug={slug} increment server:defer class="font-mono">
-            <TextSkeleton slot="fallback"/>
-          </ViewCount> 
+          <ViewCount postSlug={slug} client:load increment />
         </div>
       </div>
     </div>

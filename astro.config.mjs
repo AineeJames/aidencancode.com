@@ -20,13 +20,23 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [db(), expressiveCode({
-    themes: ["github-dark-high-contrast"],
-    frames: {
-      showCopyToClipboardButton: true,
-    },
-  }), icon(), svelte()],
+  integrations: [
+    db(),
+    expressiveCode({
+      themes: ["github-dark-high-contrast"],
+      frames: {
+        showCopyToClipboardButton: true,
+      },
+    }),
+    icon(),
+    svelte(),
+  ],
+
   adapter: netlify(),
+
+  session: {
+    cookie: "session-cookie",
+  },
 
   experimental: {
     fonts: [
