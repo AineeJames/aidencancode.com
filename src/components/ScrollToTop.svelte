@@ -33,7 +33,7 @@
   aria-label="Scroll to top"
   class="
     fixed bottom-5 right-5 z-50 backdrop-blur-sm w-10 h-10 rounded-full border border-dashed border-zinc-400 text-white
-    transition-all duration-300 ease-in-out transform
+    transition-all duration-300 ease-in-out transform hover:cursor-pointer
   "
   class:opacity-0={!showButton}
   class:pointer-events-none={!showButton}
