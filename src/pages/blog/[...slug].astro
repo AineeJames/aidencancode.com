@@ -7,6 +7,8 @@ import TableOfContents from "../../components/TableOfContents.astro";
 import Giscus from "../../components/Giscus.astro";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
+import { Icon } from "astro-icon/components";
+import TextSkeleton from "../../components/TextSkeleton.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -29,13 +31,15 @@ const pubDateFormat = dayjs(post.data.pubDate)
     <h1 class="text-5xl font-extrabold mb-5 text-accent">{post.data.title}</h1>
     <div class="flex justify-between text-sm text-dim mb-5">
       <p>{post.data.author} / {pubDateFormat}</p>
-      <p>
-        {remarkPluginFrontmatter.minutesRead} &mdash; 
-        <ViewCount server:defer postSlug={slug} increment>
-          <div slot="fallback" class="inline-block h-[1rem] w-[3ch] animate-pulse rounded-md bg-zinc-800"></div>
-        </ViewCount> 
-        Views
-      </p>
+      <div class="flex gap-[0.5ch]">
+        <p>{remarkPluginFrontmatter.minutesRead} &mdash;</p>
+        <div class="flex items-center gap-1 bg-zinc-800 px-1 rounded-sm">
+          <Icon name="lucide:eye"/>
+          <ViewCount postSlug={slug} increment server:defer class="font-mono">
+            <TextSkeleton width={2} slot="fallback"/>
+          </ViewCount> 
+        </div>
+      </div>
     </div>
   </div>
 

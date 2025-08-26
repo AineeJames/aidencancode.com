@@ -1,0 +1,9 @@
+---
+interface Props {
+  width: number;
+}
+
+const { width } = Astro.props;
+---
+<div class={`inline-block h-[1rem] w-[${width}ch] animate-pulse rounded-md bg-zinc-950 border border-dashed border-zinc-400`}>
+</div>

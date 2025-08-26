@@ -11,9 +11,11 @@
   "dependencies": {
     "@astrojs/db": "^0.17.1",
     "@astrojs/netlify": "^6.5.8",
+    "@iconify-json/lucide": "^1.2.64",
     "@tailwindcss/vite": "^4.1.12",
     "astro": "^5.13.3",
     "astro-expressive-code": "^0.41.3",
+    "astro-icon": "^1.1.5",
     "dayjs": "^1.11.13",
     "mdast-util-to-string": "^4.0.0",
     "reading-time": "^1.5.0",

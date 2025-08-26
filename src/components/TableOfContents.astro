@@ -11,8 +11,8 @@ const { headings, maxDepth = 2 } = Astro.props;
 const filteredHeadings = headings.filter((heading) => heading.depth <= maxDepth)
 ---
 
-<nav class="w-sm lg:block hidden h-fit p-2 rounded-md border border-dashed border-zinc-600">
-  <h2 class="text-xl font-bold text-dim">Table of Contents</h2>
+<nav class="w-sm lg:block hidden h-fit border-l pl-5 border-zinc-700">
+  <h2 class="text-lg text-white">Table of Contents</h2>
   <ul>
     {
     filteredHeadings.map(heading => (

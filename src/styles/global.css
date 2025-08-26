@@ -10,7 +10,7 @@
   --color-black: var(--color-zinc-950);
   --color-white: var(--color-zinc-50);
 
-  --color-accent: #d4614c;
+  --color-accent: #fe8019;
 }
 
 .no-scrollbar {
@@ -21,7 +21,6 @@
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
-
 
 body {
   @apply bg-white dark:bg-black text-black dark:text-white;
