@@ -1,22 +1,40 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content"
+import { getCollection, type CollectionEntry } from "astro:content";
 import ViewCount from "../../components/ViewCount.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import dayjs from "dayjs";
 
 const posts: CollectionEntry<"blog">[] = await getCollection("blog");
+const orderedPosts = posts.sort((a, b) => {
+  return b.data.pubDate.valueOf() - a.data.pubDate.valueOf();
+})
 ---
 
-<style>
-@references "tailwindcss";
-
-a {
-  @apply underline hover:opacity-50;
-}
-</style>
-
 <BaseLayout title="Blog">
-  <h1>Blog</h1>
-  {posts.map((post: CollectionEntry<"blog">) => (
-  <a href={`/blog/${post.id}`}>{post.data.title} - <ViewCount server:defer postSlug={post.id} /> views</a>
-  ))}
+  <h1 class="text-5xl font-bold text-accent mb-5">Blog</h1>
+  <ul>
+    {orderedPosts.map((post) => {
+      const pubDateFormat = dayjs(post.data.pubDate).format("DD MMM YYYY");
+
+      return (
+        <li class="mb-4">
+          <a class="flex gap-1 md:gap-5 flex-col md:flex-row transition-all hover:bg-zinc-900 p-2 rounded-lg" href={`/blog/${post.id}`}>
+            <div class="text-right md:w-20 flex flex-row gap-1 md:flex-col">
+              <p class="text-xs text-dim">{pubDateFormat}</p>
+              <p class="text-xs text-dim md:hidden">&middot;</p>
+              <p class="text-xs text-dim">
+                <ViewCount server:defer postSlug={post.id}>
+                  <span slot="fallback">&hellip;</span>
+                </ViewCount> views
+              </p>
+            </div>
+            <div class="border-l border-zinc-700 pl-3">
+              <p class="text-2xl">{post.data.title}</p>
+              <p class="text-sm text-dim">{post.data.description}</p>
+            </div>
+          </a>
+        </li>
+      );
+    })}
+  </ul>
 </BaseLayout>

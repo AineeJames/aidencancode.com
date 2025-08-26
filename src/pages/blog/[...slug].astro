@@ -9,6 +9,7 @@ import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { Icon } from "astro-icon/components";
 import TextSkeleton from "../../components/TextSkeleton.astro";
+import Avatar from "../../components/Avatar.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -29,14 +30,17 @@ const pubDateFormat = dayjs(post.data.pubDate)
 <BlogPost title={post.data.title}>
   <div slot="header">
     <h1 class="text-5xl font-extrabold mb-5 text-accent">{post.data.title}</h1>
-    <div class="flex justify-between text-sm text-dim mb-5">
-      <p>{post.data.author} / {pubDateFormat}</p>
+    <div class="flex justify-between text-sm text-dim mb-5 items-center">
+      <div class="flex items-center gap-2">
+        <Avatar size={20}/>
+        <p>{post.data.author} / {pubDateFormat}</p>
+      </div>
       <div class="flex gap-[0.5ch]">
         <p>{remarkPluginFrontmatter.minutesRead} &mdash;</p>
         <div class="flex items-center gap-1 bg-zinc-800 px-1 rounded-sm">
           <Icon name="lucide:eye"/>
           <ViewCount postSlug={slug} increment server:defer class="font-mono">
-            <TextSkeleton width={2} slot="fallback"/>
+            <TextSkeleton slot="fallback"/>
           </ViewCount> 
         </div>
       </div>

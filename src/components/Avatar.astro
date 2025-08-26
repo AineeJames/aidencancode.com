@@ -1,0 +1,14 @@
+---
+import { Image } from "astro:assets";
+import me from "../images/me.jpg";
+
+interface Props {
+  size ?: number;
+}
+
+const { size = 24 } = Astro.props;
+const width = size;
+const height = size;
+---
+
+<Image src={me} alt="Profile Picture" {width} {height} class="rounded-full"/>

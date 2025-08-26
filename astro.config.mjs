@@ -8,6 +8,8 @@ import expressiveCode from "astro-expressive-code";
 
 import icon from "astro-icon";
 
+import svelte from "@astrojs/svelte";
+
 // https://astro.build/config
 export default defineConfig({
   markdown: {
@@ -18,16 +20,12 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [
-    db(),
-    expressiveCode({
-      themes: ["github-dark-high-contrast"],
-      frames: {
-        showCopyToClipboardButton: true,
-      },
-    }),
-    icon(),
-  ],
+  integrations: [db(), expressiveCode({
+    themes: ["github-dark-high-contrast"],
+    frames: {
+      showCopyToClipboardButton: true,
+    },
+  }), icon(), svelte()],
   adapter: netlify(),
 
   experimental: {
