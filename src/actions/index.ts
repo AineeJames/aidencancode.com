@@ -13,15 +13,15 @@ export const server = {
         const views = await db
           .select()
           .from(Views)
-          .where(eq(Views.postSlug, postSlug))
+          .where(eq(Views.postSlug, postSlug));
         return views[0]?.count || 0;
       } catch (e) {
         throw new ActionError({
           code: "BAD_REQUEST",
-          message: `Error getting view count for post with slug ${postSlug}`
-        })
+          message: `Error getting view count for post with slug ${postSlug}`,
+        });
       }
-    }
+    },
   }),
 
   incViews: defineAction({
@@ -29,8 +29,9 @@ export const server = {
       postSlug: z.string(),
     }),
     handler: async ({ postSlug }, { request }) => {
-      const isPrerender = request.headers.get("astro-referrer")
-      if (isPrerender) return;
+      const purpose = request.headers.get("Purpose");
+      if (purpose === "prefetch" || purpose === "prerender") return;
+
       try {
         return await db
           .insert(Views)
@@ -39,13 +40,13 @@ export const server = {
             target: Views.postSlug,
             set: { count: sql`count + 1` },
           })
-          .returning()
+          .returning();
       } catch (e) {
         throw new ActionError({
           code: "BAD_REQUEST",
-          message: `Error incrementing view count for post with slug ${postSlug}`
-        })
+          message: `Error incrementing view count for post with slug ${postSlug}`,
+        });
       }
-    }
+    },
   }),
-}
+};
