@@ -9,7 +9,7 @@ pubDate: 2025-08-26
 
 I am new to Astro, and when it came to implementing a view counter for this blog, I was confused by old
 tutorials. My intuition was to use Astro's [server islands](https://docs.astro.build/en/guides/server-islands/)
-like so: `<ViewCount increment server:defer />` to defer the component's rendering to the server. The problem is astro
+like so: `<ViewCounter server:defer />` to defer the component's rendering to the server. The problem is that Astro
 automatically adds the following into any page that uses a **server-side island** component:
 
 ```astro title="src/layouts/Layout.astro" ins={3}
@@ -23,17 +23,17 @@ automatically adds the following into any page that uses a **server-side island*
 </html>
 ```
 
-On Chrome (and probably some other browsers too), this method actuially worked just fine. It wasn't until I pulled out
-my phone to check on Safari that I noticed the views incrememneted **twice**. This is what let me to the discovery I mentioned
+On Chrome (and probably some other browsers too), this is actually just fine. However, when I pulled out
+my phone to check on Safari, I noticed that the views incremented **twice**. This is what let me to discover what I mentioned
 above.
 
-While prefetching is important, I couldn't find a way to disable this behavior easily through the Astro docs. Therefore, I landed on
-the **client-side island** approach while still allowing me to use SSG.
+While prefetching is important and good for client performace, I couldn't find a way to disable this behavior easily through the
+Astro docs. Therefore, I landed on using a **client-side island** approach which still allows me to use [SSG](https://en.wikipedia.org/wiki/Static_site_generator).
 
 # Implementation
 
-I'll try to keep this implementation example very simple &mdash; only adding the necessary code. I also will try to use the current
-best practices when working in an Astro project.
+I'll try to keep this implementation example very simple &mdash; only adding and showing necessary code following the current best practices
+in Astro.
 
 The first step is to _init_ our project (if you aren't already working in one):
 
@@ -50,13 +50,12 @@ npx astro add svelte
 
 ## Database configuration
 
-Now that we have our project initialized and our database integrastion setup, we can move on to our first step: defining our db schema.
-[Astro DB](https://docs.astro.build/en/guides/astro-db/) allows us to easily define database schemas in the auto generated `db/config.ts` file:
+Now that we have our project initialized and our database integration setup, we can move on to our first step: **defining the db schema**.
+[Astro DB](https://docs.astro.build/en/guides/astro-db/) allows us to easily define database schemas in the `db/config.ts` file:
 
 ```ts title="db/config.ts"
 import { column, defineDb, defineTable } from "astro:db";
 
-// Views holds view counts for a given slug (aka blog post)
 const Views = defineTable({
   slug: column.text({ unique: true }),
   count: column.number({ default: 1 }),
@@ -67,9 +66,18 @@ export default defineDb({
 });
 ```
 
+### Explaination of code:
+
+- `defineTable`: creates a new table schema using the `column` import. Here we also set the slug to be the primary key and default the count
+  to 1.
+
+- Add the new `Views` table to the database tables.
+
 ## Defining actions
 
 [Astro Actions](https://docs.astro.build/en/guides/actions/) allow us to define reusable pieces of code that we can call from out components.
+The following code block defines our queries to get and increment the view count for a given page. We also can throw `ActionError`'s that we
+can handle later on in our componets.
 
 ```ts title="src/actions/index.ts"
 import { ActionError } from "astro/actions/runtime/virtual/shared.js";
@@ -125,10 +133,15 @@ export const server = {
 };
 ```
 
+Astro DB uses [Drizzle ORM](https://orm.drizzle.team/) for queriying. Check out the docs if you need help understanding how the
+database function chaining works.
+
 ## Declaring our component
 
-I am going to use [Svelte](https://svelte.dev/) for this, buy you can use any supported UI integration that Astro supports. I want this component
-to increment only when the `incremement` boolean prop is passed and render the view count after it is fetched.
+I am going to use [Svelte](https://svelte.dev/) for this, buy you can use any supported UI integration that Astro supports.
+
+In order to get the view count for a specific post, we need to include the `slug` as a prop. I also want this component to
+increment only when the `incremement` boolean prop is passed. Finally we
 
 ```svelte title="src/components/ViewCount.astro"
 <script lang="ts">
@@ -162,7 +175,7 @@ to increment only when the `incremement` boolean prop is passed and render the v
 
 ## Using our component
 
-Now we can use our new component like so inside of the blog post:
+Now that we have created our component, we can include it within our pages:
 
 ```astro title="src/pages/blog/[...slug].astro" "client:load"
 ---
@@ -175,10 +188,12 @@ import ViewCount from "../components/ViewCount.svelte";
 </Layout>
 ```
 
-**NOTE:** We must are using the `client:load` island directive to tell Astro to hydrate the islang at load time since
-we want to get our count value ASAP.
+> ### NOTE
+>
+> - We are using the `client:load` island directive to tell Astro to hydrate the island at load time.
+>   We use this since we want to fetch our view count **ASAP**!
 
-We can also reuse this component in out blog listing page by omitting the `increment` flag:
+We can reuse this component in our blog listing page by omitting the `increment` flag when adding the component:
 
 ```astro title="src/pages/blog/index.astro"
 ---
@@ -196,6 +211,12 @@ const posts = await getCollection("blog");
 </Layout>
 ```
 
+Pretty sweet, huh!
+
 # Conclusion
 
-Well, there we have it!
+Using Astro Actions, Astro DB, and client islands with Svelte we were able to create a simple yet effective solution for
+tracking blog views. The client side approach can feel roundabout at times, but until `server:defer` is better documented,
+this will have to do.
+
+Please leave a comment and happy coding!
