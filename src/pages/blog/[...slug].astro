@@ -25,15 +25,15 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post);
 
 const pubDateFormat = dayjs(post.data.pubDate)
   .format("DD MMM YYYY")
-const lastModified = dayjs(remarkPluginFrontmatter.lastModified)
-  .format("DD MMM YYYY")
+// const lastModified = dayjs(remarkPluginFrontmatter.lastModified)
+//   .format("DD MMM YYYY")
 ---
 
 <BlogPost title={post.data.title}>
   <div slot="header">
-    <h1 class="text-5xl font-extrabold mb-5">{post.data.title}</h1>
+    <h1 class="text-5xl font-extrabold mb-5 text-accent">{post.data.title}</h1>
     <div class="flex justify-between text-sm text-dim mb-5">
-      <p>{post.data.author} / {pubDateFormat}{lastModified !== pubDateFormat ? ` (last update: ${lastModified})` : ""}</p>
+      <p>{post.data.author} / {pubDateFormat}</p>
       <p>{remarkPluginFrontmatter.minutesRead} &mdash; <ViewCount server:defer postSlug={slug} increment /> Views</p>
     </div>
   </div>

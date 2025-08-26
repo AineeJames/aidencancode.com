@@ -3,7 +3,7 @@ import type { MarkdownHeading } from 'astro';
 
 interface Props {
   headings: MarkdownHeading[];
-  maxDepth: number;
+  maxDepth?: number;
 }
 
 const { headings, maxDepth = 2 } = Astro.props;
@@ -11,13 +11,13 @@ const { headings, maxDepth = 2 } = Astro.props;
 const filteredHeadings = headings.filter((heading) => heading.depth <= maxDepth)
 ---
 
-<nav class="w-sm lg:block hidden">
-  <h2 class="text-lg font-bold">Table of Contents</h2>
+<nav class="w-sm lg:block hidden bg-zinc-900 h-fit p-2 rounded-md border border-dashed border-zinc-600">
+  <h2 class="text-xl font-bold">Table of Contents</h2>
   <ul>
     {
     filteredHeadings.map(heading => (
     <li style={{ marginLeft: `${(heading.depth - 1) * 1.5}rem` }}>
-      <a href={`#${heading.slug}`} class="text-dim hover:text-white">{heading.text}</a>
+      <a href={`#${heading.slug}`} class="text-dim hover:text-accent transition-colors">{heading.text}</a>
     </li>
     ))
     }

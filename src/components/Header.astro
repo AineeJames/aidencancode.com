@@ -1,3 +1,7 @@
+---
+import Logo from "./Logo.astro";
+---
+
 <style>
   @reference "tailwindcss";
 
@@ -6,9 +10,12 @@
   }
 </style>
 
-<header class="sticky top-0 bg-white/30 dark:bg-black/30 backdrop-blur-sm w-full p-2">
-  <nav>
-    <a href="/">home</a>
-    <a href="/blog">blog</a>
+<header class="sticky top-0 bg-white/30 dark:bg-black/30 backdrop-blur-sm w-full p-2 border-b border-dashed border-zinc-600 z-50">
+  <nav class="flex justify-between items-center">
+    <Logo />
+    <div>
+      <a href="/">home</a>
+      <a href="/blog">blog</a>
+    </div>
   </nav>
 </header>

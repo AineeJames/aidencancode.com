@@ -9,6 +9,8 @@
 
   --color-black: var(--color-zinc-950);
   --color-white: var(--color-zinc-50);
+
+  --color-accent: #d4614c;
 }
 
 body {
