@@ -5,6 +5,7 @@ import BlogPost from "../../layouts/BlogPost.astro";
 import ViewCount from "../../components/ViewCount.astro";
 import dayjs from "dayjs";
 import TableOfContents from "../../components/TableOfContents.astro";
+import Giscus from "../../components/Giscus.astro";
 
 export const prerender = false;
 
@@ -38,4 +39,5 @@ const lastModified = dayjs(remarkPluginFrontmatter.lastModified)
   </div>
   <Content slot="content"/>
   <TableOfContents {headings} slot="sidebar" />
+  <Giscus slot="footer"/>
 </BlogPost>
