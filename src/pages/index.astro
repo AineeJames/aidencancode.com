@@ -1,7 +1,44 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import info from "../../content/landing/info.json";
+import Button from "../components/Button.svelte";
+import { Icon } from "astro-icon/components";
+import { Content as About } from "../../content/landing/about.md";
+import Prose from "../components/Prose.astro";
 ---
 
 <BaseLayout title="About">
-	<h1>Hello, world!</h1>
+	<h3 class="text-xl md:text-3xl text-accent">Hello, world! I'm &mdash;</h3>
+	<h1 class="text-6xl md:text-9xl font-extrabold mb-5">Aiden Olsen.</h1>
+	<h3 class="text-xl md:text-3xl text-dim mb-5">I like to write <span class="text-accent font-mono">code</span>.</h3>
+	<h3 class="text-md md:text-xl text-dim font-mono">+ Currently {info.currently}</h3>
+	<h3 class="text-md md:text-xl text-dim font-mono mb-10">+ {info.job.role} @ <a href={info.job.link} class="text-accent underline hover:opacity-80 transition-opacity">{info.job.company}</a></h3>
+	<div class="flex gap-3 mb-20">
+		{info.socials.map(social => (
+		<Button client:load href={social.link}>
+			<Icon name={social.icon} class="mr-2 text-accent" /> 	
+			{social.name}
+		</Button>				
+		))}
+	</div>
+	<div class="flex items-center gap-2 text-3xl font-bold">
+		<Icon name="lucide:info"/>
+		<h1>About Me</h1>
+	</div>
+	<Prose>
+		<About /> 
+	</Prose>
+	<h2 class="mt-20 text-3xl font-bold text-center mb-5">Get in Touch.</h2>
+	<p class="text-center text-dim">Feel free to reach out &mdash; I'd love to chat.</p>
+	<p class="text-center text-dim mb-5">I'd also love to discuss project ideas!</p>
+	<div class="flex gap-3 justify-center">
+		<Button client:load href="https://www.linkedin/in/aiden-olsen">
+			<Icon name="lucide:linkedin" class="mr-2 text-accent" /> 	
+			LinkedIn
+		</Button>
+		<Button client:load href="mailto:olsenaiden33@gmail.com">
+				<Icon name="lucide:mail" class="mr-2 text-accent" /> 	
+				Email
+		</Button>
+	</div>
 </BaseLayout>

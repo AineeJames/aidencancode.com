@@ -1,0 +1,25 @@
+{
+  "currently": "learning Astro to build this site!",
+  "job": {
+    "role": "Data Analyst / Programmer",
+    "company": "Serenity Lane",
+    "link": "https://www.serenitylane.org/"
+  },
+  "socials": [
+    {
+      "name": "GitHub",
+      "link": "https://www.github.com/aineejames",
+      "icon": "lucide:github"
+    },
+    {
+      "name": "LinkedIn",
+      "link": "https://www.linkedin.com/in/aiden-olsen",
+      "icon": "lucide:linkedin"
+    },
+    {
+      "name": "Email",
+      "link": "mailto:olsenaiden33@gmail.com",
+      "icon": "lucide:mail"
+    }
+  ]
+}
