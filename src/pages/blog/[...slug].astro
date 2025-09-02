@@ -26,7 +26,7 @@ const pubDateFormat = dayjs(post.data.pubDate)
   .format("DD MMM YYYY")
 ---
 
-<BlogPost title={post.data.title}>
+<BlogPost title={post.data.title} {post}>
   <div slot="header">
     <h1 class="text-4xl md:text-5xl font-extrabold mb-5 text-accent">{post.data.title}</h1>
     <div class="flex justify-between text-sm text-dim mb-5 items-center">

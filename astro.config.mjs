@@ -10,6 +10,8 @@ import icon from "astro-icon";
 
 import svelte from "@astrojs/svelte";
 
+import og from "astro-og";
+
 // https://astro.build/config
 export default defineConfig({
   markdown: {
@@ -20,17 +22,12 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [
-    db(),
-    expressiveCode({
-      themes: ["github-dark-high-contrast"],
-      frames: {
-        showCopyToClipboardButton: true,
-      },
-    }),
-    icon(),
-    svelte(),
-  ],
+  integrations: [db(), expressiveCode({
+    themes: ["github-dark-high-contrast"],
+    frames: {
+      showCopyToClipboardButton: true,
+    },
+  }), icon(), svelte(), og()],
 
   adapter: netlify(),
 

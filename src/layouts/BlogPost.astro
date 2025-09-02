@@ -2,15 +2,17 @@
 import BaseLayout from "./BaseLayout.astro";
 import Prose from "../components/Prose.astro";
 import ScrollToTop from "../components/ScrollToTop.svelte";
+import type { CollectionEntry } from "astro:content";
 
 interface Props {
   title: string;
+  post: CollectionEntry<"blog">;
 }
 
-const { title } = Astro.props;
+const { title, post } = Astro.props;
 ---
 
-<BaseLayout title={`Blog | ${title}`}>
+<BaseLayout title={`Blog | ${title}`} {post}>
   <ScrollToTop client:load/>
   <article class="mb-20">
     <slot name="header" />
