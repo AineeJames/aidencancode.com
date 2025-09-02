@@ -9,7 +9,8 @@ import Prose from "../components/Prose.astro";
 
 <BaseLayout title="About">
 	<h3 class="text-xl md:text-3xl text-accent">Hello, world! I'm &mdash;</h3>
-	<h1 class="text-6xl md:text-9xl font-extrabold mb-5">Aiden Olsen.</h1>
+	<h1 class="text-6xl md:text-9xl font-extrabold mb-5 absolute px-2 py-1">Aiden Olsen.</h1>
+	<h1 class="text-6xl md:text-9xl font-extrabold mb-5 text-zinc-700 ">Aiden Olsen.</h1> 
 	<h3 class="text-xl md:text-3xl text-dim mb-5">I like to write <span class="text-accent font-mono">code</span>.</h3>
 	<h3 class="text-md md:text-xl text-dim font-mono">+ Currently {info.currently}</h3>
 	<h3 class="text-md md:text-xl text-dim font-mono mb-10">+ {info.job.role} @ <a href={info.job.link} class="text-accent underline hover:opacity-80 transition-opacity">{info.job.company}</a></h3>
