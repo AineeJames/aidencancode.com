@@ -27,7 +27,7 @@ On Chrome (and probably some other browsers too), this is actually just fine. Ho
 my phone to check on Safari, I noticed that the views incremented **twice**. This is what let me to discover what I mentioned
 above.
 
-While prefetching is important and good for client performace, I couldn't find a way to disable this behavior easily through the
+While prefetching is important and good for client performance, I couldn't find a way to disable this behavior easily through the
 Astro docs. Therefore, I landed on using a **client-side island** approach which still allows me to use [SSG](https://en.wikipedia.org/wiki/Static_site_generator).
 
 # Implementation
@@ -66,7 +66,7 @@ export default defineDb({
 });
 ```
 
-### Explaination of code:
+### Explanation of code:
 
 - `defineTable`: creates a new table schema using the `column` import. Here we also set the slug to be the primary key and default the count
   to 1.
@@ -77,7 +77,7 @@ export default defineDb({
 
 [Astro Actions](https://docs.astro.build/en/guides/actions/) allow us to define reusable pieces of code that we can call from out components.
 The following code block defines our queries to get and increment the view count for a given page. We also can throw `ActionError`'s that we
-can handle later on in our componets.
+can handle later on in our components.
 
 ```ts title="src/actions/index.ts"
 import { ActionError } from "astro/actions/runtime/virtual/shared.js";
@@ -138,10 +138,10 @@ database function chaining works.
 
 ## Declaring our component
 
-I am going to use [Svelte](https://svelte.dev/) for this, buy you can use any supported UI integration that Astro supports.
+I am going to use [Svelte](https://svelte.dev/) for this, but you can use any supported UI integration that Astro supports.
 
 In order to get the view count for a specific post, we need to include the `slug` as a prop. I also want this component to
-increment only when the `incremement` boolean prop is passed. Finally we
+increment only when the `increment` boolean prop is passed.
 
 ```svelte title="src/components/ViewCount.astro"
 <script lang="ts">
