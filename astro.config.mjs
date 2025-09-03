@@ -11,6 +11,8 @@ import og from "astro-og";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://aidencancode.com",
+
   markdown: {
     remarkPlugins: [remarkReadingTime],
   },
