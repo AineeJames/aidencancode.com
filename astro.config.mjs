@@ -9,6 +9,8 @@ import icon from "astro-icon";
 import svelte from "@astrojs/svelte";
 import og from "astro-og";
 
+import favicons from "astro-favicons";
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://aidencancode.com",
@@ -26,7 +28,7 @@ export default defineConfig({
     frames: {
       showCopyToClipboardButton: true,
     },
-  }), icon(), svelte(), og()],
+  }), icon(), svelte(), og(), favicons()],
 
   adapter: netlify(),
 
