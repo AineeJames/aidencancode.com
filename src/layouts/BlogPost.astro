@@ -5,14 +5,13 @@ import ScrollToTop from "../components/ScrollToTop.svelte";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
-  title: string;
   post: CollectionEntry<"blog">;
 }
 
-const { title, post } = Astro.props;
+const { post } = Astro.props;
 ---
 
-<BaseLayout title={`Blog | ${title}`} {post}>
+<BaseLayout {post}>
   <ScrollToTop client:load/>
   <article class="mb-20">
     <slot name="header" />

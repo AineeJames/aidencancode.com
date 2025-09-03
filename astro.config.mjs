@@ -5,11 +5,8 @@ import db from "@astrojs/db";
 import netlify from "@astrojs/netlify";
 import { remarkReadingTime } from "./remark-reading-time.mjs";
 import expressiveCode from "astro-expressive-code";
-
 import icon from "astro-icon";
-
 import svelte from "@astrojs/svelte";
-
 import og from "astro-og";
 
 // https://astro.build/config
